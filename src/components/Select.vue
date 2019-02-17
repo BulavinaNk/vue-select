@@ -904,15 +904,13 @@
        * @return {Boolean}        True when selected | False otherwise
        */
       isOptionSelected(option) {
-          let selected = false
-          this.valueAsArray.forEach(value => {
-            if (typeof value === 'object') {
-              selected = this.optionObjectComparator(value, option)
-            } else if (value === option || value === option[this.index]) {
-              selected = true
-            }
-          })
-          return selected
+        return this.valueAsArray.some(value => {
+          if(typeof value === 'object') {
+            return this.optionObjectComparator(value, option)
+          } else {
+            return value === option || value === option[this.index]
+          }
+        });
       },
 
       /**
@@ -932,7 +930,6 @@
         }
         return false;
       },
-
       /**
        * Finds an option from this.options
        * where option[this.index] matches
